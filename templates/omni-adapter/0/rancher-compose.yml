@@ -6,13 +6,16 @@
     (Rabbit, Kafka, SQS) Source/Sink adapter
   questions:
     - variable: "service_name"
+      label: "Service Name"
       type: "string"
       required: true
-      description: "The service name for the adapter"
+      description: "The Consul service name for the adapter"
     - variable: "config"
+      label: "Config File"
       type: "multiline"
       description: "Adapter configuration file"
     - variable: "version"
+      label: "Version"
       type: "string"
       default: "latest"
       required: true
