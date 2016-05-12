@@ -1,0 +1,6 @@
+name: Omni-Adapter
+description: |
+    (Rabbit, Kafka, SQS) Source/Sink adapter
+version: 1.0-rancher0
+category: Adapter
+projectURL: https://github.com/peoplenet/omni-adapter

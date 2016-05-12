@@ -1,0 +1,32 @@
+.catalog:
+  name: Omni-Adapter
+  version: 1.0-rancher0
+  uuid: omni-adapter-0
+  description: |
+    (Rabbit, Kafka, SQS) Source/Sink adapter
+  questions:
+    - variable: "service_name"
+      type: "string"
+      description: "The service name for the adapter"
+    - variable: "config"
+      type: "multiline"
+      description: "Adapter configuration file"
+adapter:
+  scale: 1
+  health_check:
+    port: 8080
+    interval: 2000
+    initializing_timeout: 60000
+    unhealthy_threshold: 3
+    strategy: recreate
+    response_timeout: 2000
+    request_line: GET "/health" "HTTP/1.0"
+    healthy_threshold: 2
+  metadata:
+    config: &adapter
+      adapter:
+        path: /config/adapter/config.yml
+        content: ${config}
+adapter-conf:
+  metadata:
+    config: *adapter

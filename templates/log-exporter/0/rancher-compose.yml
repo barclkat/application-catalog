@@ -1,6 +1,7 @@
 .catalog:
   name: Log Exporter
   version: 1.0-rancher0
+  uuid: log-exporter-0
   description: |
     Collects & exports logs to Redis
   questions:

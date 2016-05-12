@@ -1,0 +1,29 @@
+adapter:
+  image: registry.devops.connectedfleet.io/omni-adapter:${version}
+  environment:
+    RATPACK_OMNI_ADAPTER__CFG: /config/adapter/config.yml
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.container.hostname_override: container_name
+    io.rancher.sidekicks: adapter-conf
+    SERVICE_8080_NAME: ${service_name}
+  volumes_from:
+    - adapter-conf
+  tty: true
+  dns:
+    - 172.17.0.1:8600
+  ports:
+    - 8080/tcp
+  stdin_open: true
+
+adapter-conf:
+  image: objectpartners/rancher-container-conf:latest
+  labels:
+    io.rancher.container.pull_image: always
+    io.rancher.container.hostname_override: container_name
+  command:
+    - config/adapter
+  volumes:
+    - /config/adapter
+  tty: true
+  stdin_open: true
