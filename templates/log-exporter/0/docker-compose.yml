@@ -10,17 +10,17 @@ logstash-collector:
   labels:
     io.rancher.sidekicks: logstash-collector-config
     io.rancher.container.hostname_override: container_name
-  tty: true
   command:
-  - logstash
-  - -f
-  - /etc/logstash
+    - logstash
+    - -f
+    - /etc/logstash
   image: logstash:2.1.1-1
+  environment:
+    LOGSPOUT: ignore
   links:
-  - 'redis:'
+    - 'redis:'
   volumes_from:
-  - logstash-collector-config
-  stdin_open: true
+    - logstash-collector-config
 logspout:
   restart: always
   environment:
@@ -29,13 +29,11 @@ logspout:
   links:
     - logstash-collector:logstash
   volumes:
-  - '/var/run/docker.sock:/var/run/docker.sock'
+    - '/var/run/docker.sock:/var/run/docker.sock'
   labels:
     io.rancher.scheduler.global: 'true'
     io.rancher.container.hostname_override: container_name
-  tty: true
   image: rancher/logspout-logstash:v0.2.0
-  stdin_open: true
 logstash-lb:
   ports:
     - 5044:5044/tcp
@@ -44,6 +42,6 @@ logstash-lb:
   labels:
     io.rancher.loadbalancer.target.logstash-collector: 5044=5044
     io.rancher.scheduler.global: 'true'
-  tty: true
   image: rancher/load-balancer-service
-  stdin_open: true
+  environment:
+    LOGSPOUT: ignore

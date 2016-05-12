@@ -7,6 +7,7 @@
   questions:
     - variable: "service_name"
       type: "string"
+      required: true
       description: "The service name for the adapter"
     - variable: "config"
       type: "multiline"
@@ -14,6 +15,7 @@
     - variable: "version"
       type: "string"
       default: "latest"
+      required: true
       description: "Version of Omni-Adapter to deploy"
 adapter:
   scale: 1

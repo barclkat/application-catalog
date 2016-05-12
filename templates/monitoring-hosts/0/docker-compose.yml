@@ -5,7 +5,6 @@ telegraf:
     io.rancher.sidekicks: telegraf-conf
     io.rancher.container.pull_image: always
     io.rancher.container.dns: 'true'
-  tty: true
   command:
     - -config
     - /config/telegraf/telegraf.conf
@@ -15,12 +14,12 @@ telegraf:
     - dbs/metrics:metrics
   volumes_from:
     - telegraf-conf
-  stdin_open: true
   net: host
   environment:
     HOST_PROC: /rootfs/proc
     HOST_SYS: /rootfs/sys
     HOST_ETC: /rootfs/etc
+    LOGSPOUT: ignore
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock:ro
     - /:/rootfs:ro
@@ -29,11 +28,11 @@ telegraf-conf:
   labels:
     io.rancher.scheduler.global: 'true'
     io.rancher.container.pull_image: always
-  tty: true
   command:
     - config/telegraf
   log_opt: {}
   image: objectpartners/rancher-container-conf:latest
+  environment:
+    LOGSPOUT: ignore
   volumes:
     - /config/telegraf
-  stdin_open: true
