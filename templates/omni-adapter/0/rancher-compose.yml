@@ -11,6 +11,10 @@
     - variable: "config"
       type: "multiline"
       description: "Adapter configuration file"
+    - variable: "version"
+      type: "string"
+      default: "latest"
+      description: "Version of Omni-Adapter to deploy"
 adapter:
   scale: 1
   health_check:
