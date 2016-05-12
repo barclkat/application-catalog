@@ -36,3 +36,14 @@ logspout:
   tty: true
   image: rancher/logspout-logstash:v0.2.0
   stdin_open: true
+logstash-lb:
+  ports:
+    - 5044:5044/tcp
+  links:
+    - logstash-collector:logstash-collector
+  labels:
+    io.rancher.loadbalancer.target.logstash-collector: 5044=5044
+    io.rancher.scheduler.global: 'true'
+  tty: true
+  image: rancher/load-balancer-service
+  stdin_open: true

@@ -1,0 +1,39 @@
+telegraf:
+  log_driver: ''
+  labels:
+    io.rancher.scheduler.global: 'true'
+    io.rancher.sidekicks: telegraf-conf
+    io.rancher.container.pull_image: always
+    io.rancher.container.dns: 'true'
+  tty: true
+  command:
+    - -config
+    - /config/telegraf/telegraf.conf
+  log_opt: {}
+  image: registry.devops.connectedfleet.io/influxdata/telegraf-docker:0.12.1
+  external_links:
+    - dbs/metrics:metrics
+  volumes_from:
+    - telegraf-conf
+  stdin_open: true
+  net: host
+  environment:
+    HOST_PROC: /rootfs/proc
+    HOST_SYS: /rootfs/sys
+    HOST_ETC: /rootfs/etc
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    - /:/rootfs:ro
+telegraf-conf:
+  log_driver: ''
+  labels:
+    io.rancher.scheduler.global: 'true'
+    io.rancher.container.pull_image: always
+  tty: true
+  command:
+    - config/telegraf
+  log_opt: {}
+  image: objectpartners/rancher-container-conf:latest
+  volumes:
+    - /config/telegraf
+  stdin_open: true
