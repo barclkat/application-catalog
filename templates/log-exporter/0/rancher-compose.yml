@@ -1,0 +1,46 @@
+.catalog:
+  name: Log Exporter
+  version: 1.0-rancher0
+  description: |
+    Collects & exports logs to Redis
+  questions:
+    - variable: "redis_host"
+      type: "string"
+      required: true
+      label: "Redis Host"
+      description: Redis service to export logs to
+    - variable: "env"
+      type: "string"
+      required: true
+      label: "Environment"
+      description: Environment name to tags logs with
+redis:
+  hostname: ${redis_host}
+logstash-collector-config:
+  scale: 1
+  metadata: &id001
+    logstash:
+      filters: |
+        mutate {
+          add_field => {
+            "env" => "${env}"
+          }
+        }
+      inputs: |
+        udp {
+          port => 5000
+          codec => "json"
+        }
+        beats {
+          port => 5044
+        }
+      outputs: |
+        redis {
+          host => "redis"
+          port => "6379"
+          data_type => "list"
+          key => "logstash"
+        }
+logstash-collector:
+  scale: 1
+  metadata: *id001

@@ -1,0 +1,5 @@
+name: Log Exporter
+description: |
+    Collects & exports logs to Redis
+version: 1.0-rancher0
+category: Logging

@@ -1,0 +1,38 @@
+redis:
+  image: rancher/external-service
+logstash-collector-config:
+  labels:
+    io.rancher.container.hostname_override: container_name
+  image: rancher/logstash-config:v0.2.0
+  links:
+  - 'redis:'
+logstash-collector:
+  labels:
+    io.rancher.sidekicks: logstash-collector-config
+    io.rancher.container.hostname_override: container_name
+  tty: true
+  command:
+  - logstash
+  - -f
+  - /etc/logstash
+  image: logstash:2.1.1-1
+  links:
+  - 'redis:'
+  volumes_from:
+  - logstash-collector-config
+  stdin_open: true
+logspout:
+  restart: always
+  environment:
+    ROUTE_URIS: logstash://logstash:5000
+    LOGSPOUT: ignore
+  links:
+    - logstash-collector:logstash
+  volumes:
+  - '/var/run/docker.sock:/var/run/docker.sock'
+  labels:
+    io.rancher.scheduler.global: 'true'
+    io.rancher.container.hostname_override: container_name
+  tty: true
+  image: rancher/logspout-logstash:v0.2.0
+  stdin_open: true
