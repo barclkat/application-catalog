@@ -14,11 +14,13 @@
       required: true
       label: "InfluxDB URL"
       description: URL for InfluxDB to send metrics to
+      default: http://influx_aws.pfmtest.com:80
     - variable: "influx_db_name"
       type: "string"
       required: true
       label: "InfluxDB Database Name"
       description: The database in InfluxDB to send metrics to
+      default: aws
 telegraf:
   metadata:
     config: &telegraf

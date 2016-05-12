@@ -9,6 +9,7 @@
       required: true
       label: "Redis Host"
       description: Redis service to export logs to
+      default: tf-logstah-redis.uzssy3.0001.use1.cache.amazonaws.com
     - variable: "env"
       type: "string"
       required: true
