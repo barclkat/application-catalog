@@ -1,0 +1,5 @@
+name: Cloudwatch Exporter
+description: |
+    Collects & Exports Cloudwatch metrics to InfluxDB
+version: 1.0-rancher0
+category: Metrics

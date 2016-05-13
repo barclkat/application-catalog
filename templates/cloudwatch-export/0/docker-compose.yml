@@ -1,0 +1,31 @@
+cloudwatch-telegraf:
+  log_driver: ''
+  labels:
+    io.rancher.sidekicks: cloudwatch-telegraf-conf
+    io.rancher.container.pull_image: always
+    io.rancher.container.hostname_override: container_name
+  tty: true
+  command:
+    - -config
+    - /config/telegraf/telegraf.conf
+  log_opt: {}
+  image: ${image}
+  privileged: true
+  volumes_from:
+    - cloudwatch-telegraf-conf
+  environment:
+    AWS_ACCESS_KEY_ID: ${aws_access_key}
+    AWS_SECRET_ACCESS_KEY: ${aws_secret_key}
+  stdin_open: true
+cloudwatch-telegraf-conf:
+  log_driver: ''
+  labels:
+    io.rancher.container.pull_image: always
+  tty: true
+  command:
+    - config/telegraf
+  log_opt: {}
+  image: objectpartners/rancher-container-conf:latest
+  volumes:
+    - /config/telegraf
+  stdin_open: true
