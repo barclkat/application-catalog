@@ -10,8 +10,6 @@ telegraf:
     - /config/telegraf/telegraf.conf
   log_opt: {}
   image: registry.devops.connectedfleet.io/influxdata/telegraf-docker:0.12.1
-  external_links:
-    - dbs/metrics:metrics
   volumes_from:
     - telegraf-conf
   net: host
