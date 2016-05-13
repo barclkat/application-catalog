@@ -9,7 +9,7 @@ telegraf:
     - -config
     - /config/telegraf/telegraf.conf
   log_opt: {}
-  image: registry.devops.connectedfleet.io/influxdata/telegraf-docker:0.12.1
+  image: library/telegraf:0.13.0
   volumes_from:
     - telegraf-conf
   net: host
@@ -17,6 +17,7 @@ telegraf:
     HOST_PROC: /rootfs/proc
     HOST_SYS: /rootfs/sys
     HOST_ETC: /rootfs/etc
+    HOST_MOUNT_PREFIX: /rootfs
     LOGSPOUT: ignore
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock:ro
