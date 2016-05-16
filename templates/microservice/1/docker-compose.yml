@@ -1,0 +1,12 @@
+app:
+  labels:
+    io.rancher.container.hostname_override: container_name
+    io.rancher.container.pull_image: always
+    SERVICE_${port_app}_NAME: ${name}
+    SERVICE_${port_admin}_NAME: ${name}-admin
+  image: registry.devops.connectedfleet.io/${image}
+  ports:
+    - ${port_app}/tcp
+    - ${port_admin}/tcp
+  dns:
+    - 172.17.0.1:8600
